@@ -6,7 +6,7 @@ public static class MauiProgram
     {
         var builder = MauiApp.CreateBuilder();
         builder
-            .UsePrismApp<App>(PrismStartup.Configure)
+            .UsePrismApp<App>(DryIoc.Rules.Default.WithUseInterpretation(), PrismStartup.Configure)
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
