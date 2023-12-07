@@ -1,13 +1,16 @@
 ﻿namespace PrismApp.ViewModels;
 
-public class MainPageViewModel : BindableBase
+public class MainPageViewModel : BindableBase, INavigationAware
 {
     private ISemanticScreenReader _screenReader { get; }
+    public IRegionManager RegionManager { get; }
+
     private int _count;
 
-    public MainPageViewModel(ISemanticScreenReader screenReader)
+    public MainPageViewModel(ISemanticScreenReader screenReader, IRegionManager regionManager)
     {
         _screenReader = screenReader;
+        RegionManager = regionManager;
         CountCommand = new DelegateCommand(OnCountCommandExecuted);
     }
 
@@ -31,5 +34,14 @@ public class MainPageViewModel : BindableBase
             Text = $"Clicked {_count} times";
 
         _screenReader.Announce(Text);
+    }
+
+    public void OnNavigatedFrom(INavigationParameters parameters)
+    {
+    }
+
+    public void OnNavigatedTo(INavigationParameters parameters)
+    {
+        RegionManager.RequestNavigate("Test", "CustomControl");
     }
 }
